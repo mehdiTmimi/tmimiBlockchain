@@ -1,8 +1,9 @@
 const Block = require("./Block")
 
 class BlockChain{
-    constructor(){
+    constructor(difficulty=0){
         this.chain=[this.createGenesisBlock()]
+        this.difficulty=difficulty
     }
     createGenesisBlock(){
         return new Block(0,"27/12/2022","Genesis Block","0")
@@ -13,7 +14,8 @@ class BlockChain{
     }
     addBlock(newBlock){
         newBlock.previousHash=this.getLatestBlock().hash
-        newBlock.hash=newBlock.calculateHash();
+        newBlock.mineBlock(this.difficulty)
+       // newBlock.hash=newBlock.calculateHash();
         this.chain.push(newBlock)
     }
     isChainValid(){
